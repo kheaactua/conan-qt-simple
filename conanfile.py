@@ -2,9 +2,8 @@
 # -*- coding: future_fstrings -*-
 # -*- coding: utf-8 -*-
 
-import os, shutil, glob
+import re, os, glob
 from conans import ConanFile, tools
-from conans.tools import cpu_count, os_info, SystemPackageTool
 from conans.errors import ConanException
 from conans.model.version import Version
 
@@ -17,6 +16,7 @@ class QtConan(ConanFile):
     name        = 'qt'
     version     = '5.9.6'
     description = 'Use pre-installed Qt'
+    url         = 'https://github.com/kheaactua/conan-qt-simple'
     license     = 'MIT'
     options = {
         'qt_path':  'ANY', # e.g. /opt/Qt5.3.2/5.3/gcc_64
@@ -46,15 +46,15 @@ class QtConan(ConanFile):
             qt_path = str(self.options.qt_path)
         else:
             # Attempt to guess
-            (major, minor, patch) = str(self.version).split('.')
+            (major, minor, _) = str(self.version).split('.')
             if tools.os_info.is_linux:
                 guesses = [
                     f'/opt/Qt{self.version}/{major}.{minor}/gcc_64',
                     f'/opt/Qt{self.version}/{self.version}/gcc_64',
                 ]
             else:
-                if 'Visual Studio' == self.compiler:
-                    v = Version(str(self.compiler.version))
+                if 'Visual Studio' == self.settings.compiler:
+                    v = Version(str(self.settings.compiler.version))
                     if v == '12':
                         year = '2012'
                     elif v == '14':
