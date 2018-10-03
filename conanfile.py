@@ -56,7 +56,7 @@ class QtConan(ConanFile):
                 if 'Visual Studio' == self.settings.compiler:
                     v = Version(str(self.settings.compiler.version))
                     if v == '12':
-                        year = '2012'
+                        year = '2013'
                     elif v == '14':
                         year = '2015'
                     elif v == '15':
@@ -74,7 +74,7 @@ class QtConan(ConanFile):
                     break
 
             if qt_path is None:
-                raise ConanException('Cannot auto-detect Qt path')
+                raise ConanException('Cannot auto-detect Qt path.  Guesses:\n - %s'%'\n - '.join(guesses))
 
         self.output.info(f'Found Qt at {qt_path}')
 
