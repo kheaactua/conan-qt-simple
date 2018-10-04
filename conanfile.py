@@ -25,7 +25,7 @@ class QtConan(ConanFile):
         'qt_path=None',
     )
     requires = (
-        'helpers/0.3@ntc/stable',
+        'helpers/[>=0.3]@ntc/stable',
     )
 
     settings    = {
@@ -75,7 +75,7 @@ class QtConan(ConanFile):
                     break
 
             if qt_path is None:
-                raise ConanException('Cannot auto-detect Qt path.  Guesses:\n - %s'%'\n - '.join(guesses))
+                raise ConanException('Cannot auto-detect Qt path.  Guesses:\n - %s\nPlease specify the directory with the qt_path option'%'\n - '.join(guesses))
 
         self.output.info(f'Found Qt at {qt_path}')
 
