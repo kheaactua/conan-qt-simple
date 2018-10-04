@@ -52,6 +52,7 @@ class QtConan(ConanFile):
                 guesses = [
                     f'/opt/Qt{self.version}/{major}.{minor}/gcc_64',
                     f'/opt/Qt{self.version}/{self.version}/gcc_64',
+                    f'%s/Qt{self.version}/{major}.{minor}/gcc_64'%os.environ.get('HOME', '/opt'),
                 ]
             else:
                 if 'Visual Studio' == self.settings.compiler:
